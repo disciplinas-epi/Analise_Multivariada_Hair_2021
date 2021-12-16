@@ -1,4 +1,5 @@
-# Analise_Multivariada_Hair_2021
-Material de estudo do curso de leitura do livro Análise Multivariada (Hair). 
+# Disciplina de Estudo Dirigido de Análise Multivariada 
+A disciplina de estudo dirigido de análise multivariada teve como livro base "Hair et al. (2009), Análise Multivariada de Dados".  
+A proposta desse repositório é organizar e disponibilizar todo o material gerado ao longo da disciplina que foi ministrada no segundo semestre de 2021 no Programa de Pós-Graduação em Epidemiologia em Saúde Pública.  
 
 Autores: alunos e professoras do PPG Epidemiologia em Saúde Pública, ENSP/Fiocruz. 
