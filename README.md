@@ -17,16 +17,16 @@ Nesta página apresentamos e indicamos onde encontrar o material organizado dura
 
 Nesta sessão apresentamos o conteúdo teórico final do capítulo introdutório, em que é descrito, de forma genérica, o passo-a-passo de uma análise multivariada. Também abordamos o conteúdo do capítulo 2,  intitulado "Exame de seus Dados". Você pode iniciar seus estudos acessando os slides "0 Introdução + Exame de seus dados" (https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/0%20Introdu%C3%A7%C3%A3o%20%2B%20Exame%20de%20seus%20dados.pdf) e a [vídeo-aula](???).
 
-## Os passos da análise multivariada
+#### Os passos da análise multivariada
 
-## Gráficos
+#### Gráficos
 
-## Dados perdidos
+#### Dados perdidos
 Nesta subsessão abordamos os erros na coleta e entrada de dados que resultam em dados perdidos, os tipos de dados perdidos e por que geram problemas para a análise. Por meio de uma série de passos, identificamos seus impactos e possíveis soluções para lidar com esse inconveniente.
 
-## Outliers
+#### Outliers
 
-## Pressupostos
+#### Pressupostos
 
 
 
