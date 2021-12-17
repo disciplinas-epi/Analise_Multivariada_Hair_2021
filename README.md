@@ -15,7 +15,7 @@ Nesta página apresentamos e indicamos onde encontrar o material organizado dura
 
 ### Conteúdo 0: Introdução e Exame de seus dados
 
-Nesta sessão apresentamos o conteúdo teórico final do capítulo introdutório, em que é descrito, de forma genérica, o passo-a-passo de uma análise multivariada. Também abordamos o conteúdo do capítulo 2,  intitulado "Exame de seus Dados". Você pode iniciar seus estudos acessando os slides "analise_agrupamento_1" e a [vídeo-aula](https://youtu.be/tFoW5vs4mOM).
+Nesta sessão apresentamos o conteúdo teórico final do capítulo introdutório, em que é descrito, de forma genérica, o passo-a-passo de uma análise multivariada. Também abordamos o conteúdo do capítulo 2,  intitulado "Exame de seus Dados". Você pode iniciar seus estudos acessando os slides "0 Introdução + Exame de seus dados" (https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/0%20Introdu%C3%A7%C3%A3o%20%2B%20Exame%20de%20seus%20dados.pdf) e a [vídeo-aula](???).
 
 ## Os passos da análise multivariada
 
@@ -53,6 +53,9 @@ Nesta sessão apresentamos o conteúdo teórico do capítulo 8 intitulado "Anál
 
 
 ### Conteúdo 6: Análise de correspondência
+
+Nesta sessão apresentamos o conteúdo teórico da segunda metade do capítulo 9 intitulado "Análise de correspondência". Você pode iniciar seus estudos acessando os slides "xxx" e a [vídeo-aula](https://www.youtube.com/watch?v=3aj2Tsc2Rns). Para praticar a análise de correspondência no R, acesse o script [xxx](xxx no git). O banco de dados utilizado está integrado ao R e foi carregado internamente ao script. 
+
 
 
 
