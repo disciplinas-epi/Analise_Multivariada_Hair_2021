@@ -46,6 +46,7 @@ Nesta sessão apresentamos o conteúdo teórico do capítulo 8 intitulado "Anál
 
 ### Conteúdo 4: Análise discriminante múltipla
 
+Nesta sessão apresentamos o conteúdo teórico do capítulo 5 intitulado "Análise Discriminante Múltipla e Regressão Logística". Você pode iniciar seus estudos acessando o pdf do conteúdo [ANÁLISE DISCRIMINANTE.pdf() e a [vídeo-aula](). Para praticar no R a análise Discriminante Múltipla , acesse o script [Análise_discriminante](xxxxxxxxxxxxx). 
 
 
 ### Conteúdo 5: Escalonamento multidimensional
