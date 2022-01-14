@@ -19,6 +19,8 @@ Nesta sessão apresentamos o conteúdo teórico final do capítulo introdutório
 
 #### Os passos da análise multivariada
 
+1. xxxxx
+
 #### Gráficos
 
 #### Dados perdidos
