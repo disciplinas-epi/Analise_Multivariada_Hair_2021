@@ -48,7 +48,7 @@ Nesta sessão apresentamos o conteúdo teórico do capítulo 8 intitulado "Anál
 
 ### Conteúdo 4: Análise Discriminante Múltipla
 
-Nesta sessão apresentamos o conteúdo teórico do capítulo 5 intitulado "Análise Discriminante Múltipla e Regressão Logística". Você pode iniciar seus estudos acessando o pdf do conteúdo [ANÁLISE DISCRIMINANTE.pdf](https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/AN%C3%81LISE%20DE%20DISCRIMINANTE.pdf) e a [vídeo-aula](xxxxx). Para praticar no R a análise Discriminante Múltipla , acesse o script [Análise_discriminante](xxxxxxxxxxxxx). 
+Nesta sessão apresentamos o conteúdo teórico do capítulo 5 intitulado "Análise Discriminante Múltipla e Regressão Logística". Você pode iniciar seus estudos acessando o pdf do conteúdo [ANÁLISE DISCRIMINANTE.pdf](https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/AN%C3%81LISE%20DE%20DISCRIMINANTE.pdf) e a [vídeo-aula](xxxxx). Para praticar no R a análise Discriminante Múltipla , acesse o script [Análise_discriminante](https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/fb8d92d5c02827ac34545ef16dd266249cc65181/An%C3%A1lise_discriminante.Rmd). 
 
 
 ### Conteúdo 5: Escalonamento multidimensional
