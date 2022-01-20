@@ -38,7 +38,7 @@ Como a **PCA** é uma técnica muito utilizada, inclusive como base para outras 
 
 ### Conteúdo 2: Análise de agrupamentos
 
-Nesta sessão apresentamos o conteúdo teórico do capítulo 8 intitulado "Análise de agrupamentos". Você pode iniciar seus estudos acessando os slides "analise_agrupamento_1" e a [vídeo-aula](https://youtu.be/tFoW5vs4mOM){:target="_blank"}. Para praticar no R os métodos de agrupamento hierárquicos, acesse o script [analise_agrupamento_hierarquico](https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/analise_agrupamento_hierarquico.R) e baixe o banco de dados "factbook".
+Nesta sessão apresentamos o conteúdo teórico do capítulo 8 intitulado "Análise de agrupamentos". Você pode iniciar seus estudos acessando os slides "analise_agrupamento_1" e a [vídeo-aula](https://youtu.be/tFoW5vs4mOM). Para praticar no R os métodos de agrupamento hierárquicos, acesse o script [analise_agrupamento_hierarquico](https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/analise_agrupamento_hierarquico.R) e baixe o banco de dados "factbook".
 
 ### Conteúdo 3: Análise Discriminante Múltipla
 
