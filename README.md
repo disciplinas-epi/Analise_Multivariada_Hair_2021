@@ -32,9 +32,9 @@ Nesta subsessão abordamos os erros na coleta e entrada de dados que resultam em
 #### Pressupostos
 
 
-### Conteúdo 1: Análise Fatorial   
+### Conteúdo 1: Análise de Componentes Principais (PCA) e Análise Fatorial   
 
-A análise fatorial é uma técnica de interdependência *"cujo propósito principal é definir a estrutura inerente entre as variáveis na análise"* (Hair et al., 2009). No capítulo 3 do livro de Hair et al. (2009), os autores dão ênfase a dois métodos de análise fatorial exploratória: a **análise de componentes principais (PCA)** e a **análise de fatores comuns**. Eles apresentam também um passo a passo com 7 estágios da análise fatorial. Nós preparamos uma [apresentação](Conteudo_1/AnaliseFatorial_apresentacao.pdf) e um [resumo](Conteudo_1/resumo_Analise_Fatorial.pdf) desse capítulo.
+A **análise fatorial** e a **análise de componentes principais (PCA)** são técnicas de interdependência com objetivo de *"definir a estrutura inerente entre as variáveis na análise"* (Hair et al., 2009). No capítulo 3 do livro de Hair et al. (2009), os autores dão ênfase a esses dois métodos de análise exploratória e apresentam também um passo a passo com 7 estágios dessas análises. Nós preparamos uma [apresentação](Conteudo_1/AnaliseFatorial_apresentacao.pdf) e um [resumo](Conteudo_1/resumo_Analise_Fatorial.pdf) desse capítulo.
 
 Como a **PCA** é uma técnica muito utilizada e serve como base para muitas outras técnicas de análise multivariada, esse conteúdo foi aprofundado em duas outras aulas além da aula que utilizou o capítulo de Hair et al. (2009) como base. Você pode assistir a [vídeo-aula](https://www.youtube.com/watch?v=yQkT70lXwT4) e a [apresentação da aula teórica](Conteudo_1/ACP%20dos%20pardais.pdf), bem como a [apresentação](Conteudo_1/An%C3%A1lise%20fatorial%20explorat%C3%B3ria.pdf) e o [script](Conteudo_1/conteudo_1_script_flu_AFE.R) da aula prática, ministradas pelas Professoras @claudia-codeco e @raquelana.
 
