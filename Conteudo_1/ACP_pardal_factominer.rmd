@@ -1,0 +1,304 @@
+---
+title: "ACP usando FactoMiner: exemplo dos pardais na tempestade"
+author: "Raquel e Cláudia"
+date: "05/10/2021"
+tag: 
+   - equacoes
+   - latex 
+mathjax: true
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r Carregando bibliotecas, eval = TRUE, message = FALSE, warning = FALSE}
+library(FactoMineR)
+library(factoextra)
+library(corrplot)
+library(tidyverse)
+
+```
+
+* Script inspirado em [Github clemonster](https://github.com/clemonster/decathlon-pca) e vídeo-aulas do [François Husson](https://www.youtube.com/c/HussonFrancois)  
+* Link de [tutoriais e aulas](https://husson.github.io)  
+* Slides de aula sobre PCA do [François Husson](http://factominer.free.fr/more/EDA_PCA.pdf)
+
+## Dados morfologicos de 49 pardais caidos apos uma tempestade
+
+```{r Lendo o csv}
+d <- read.csv2("dados/sparrow.csv")
+names(d)
+summary(d)
+
+```
+
+### Condes 
+Veja o uso detalhado dessa função aqui nesse [link](http://factominer.free.fr/factomethods/continuous-variables-description.html).  
+Também temos exemplo no script ACP_correlacao.rmd.  
+
+Nessa função, temos que escolher a variável que será testada com todas as outras. É só informar o índice dessa variável. Escolhi a variável corpo, que é a terceira. Essa função tem como *default* mostrar apenas as correlações que tem o limite de significância de 0.05. Se quiser ser mais ou menos permissivo, é só alterar com parâmetro *proba*. Veja o help da função ou consulte a página do site FactoMineR acima.
+
+```{r Função condes}
+condes(d, num.var = 3)
+
+```
+
+Vendo direto quais foram significativas:
+```{r condes sig}
+condes(d, num.var = 3)$quanti
+dim(condes(d, num.var = 3)$quanti)[1]
+
+```
+
+
+### Corrplot
+Para o corrplot, retirei a variável ID, pois não faz sentido aqui. Muitas vezes, nessa etapa, avaliamos se as variáveis estão muito correlacionadas e testamos retirando uma ou mais e comparando. Em algumas análises, o pesquisador pode se basear por esse critério ou combinação de critérios para eliminar variáveis. Depende do objetivo.
+```{r corrplot}
+corrplot(cor(d[, -1]), type = "lower", order = "hclust", method = 'color', addCoef.col = "white", tl.cex = 0.8, tl.col = 1, number.cex = 0.7)
+
+```
+
+
+## PCA: um passo a passo amigável
+
+**1- Centralizar as variáveis**
+
+Precisamos centralizar as variáveis, umas vez que elas tem magnitudes diferentes. 
+Isso pode ser feito usando scale().  
+$$
+Xpadronizado = scale(X) = (X - media(X)) / dp(X)
+$$
+A variável padronizada não tem mais a unidade de medida original (mm).    
+Agora é medida em termos de unidades de desvio em relação à media.    
+
+* *Sugestão:*
+Quem tiver curiosidade, rode novamente o corrplot usando o banco d1. Também pode rodar o condes. O que acontece?
+
+Obs.: Usaremos o banco d nas análises, porque na função PCA tem o parâmetro scale já! Aqui é para visualizarem a diferença. Podem remover o d1 se quiserem com rm().
+
+```{r scale}
+d1 <- scale(d)
+d1
+
+summary(d1)
+
+# rm(d1)
+
+```
+
+Valores próximos de 0 = próximo da media.  
+Valor = 1 = 1 desvio padrão acima da media.   
+Valor = -1 = 1 desvio padrão abaixo da media.     
+
+Se a distribuição é normal, cerca de 67% dos individuos estão entre dp = -1 e dp = 1.     
+Apenas 5% estao fora do intervalo [-1.96, 1.96].     
+Logo, podemos comparar em todas as variáveis, quem são os extremos e quem está na média.    
+
+**2 - Escolha que variáveis serão usadas para calcular o PCA e quais serão suplementares (que serão usadas depois, para fins de interpretacao).**
+
+**Sobreviveu** foi escolhida como variável suplementar. Ela foi transformada para fator, uma vez que está como inteiro e usada em *quali.sup*. É possível colocar mais variáveis como suplementar. Também é possível ter variáveis numéricas como suplementar, em *quanti.sup*. 
+```{r categorica}
+d <- d %>% 
+   mutate(sobreviveu = as.factor(
+      case_when(sobreviveu == 0 ~ "Não",
+                sobreviveu == 1 ~ "Sim")
+                                 )
+          ) 
+
+```
+
+**3. PCA ** 
+Note que ao rodar o PCA, automaticamente já visualizamos um gráfico. É possível retirar essa visualização, se quiserem, com o argumento *graph = F*. Abaixo iremos explorar outras visualizações do PCA. Também há visualização do pacote *factoextra*. 
+
+Na função PCA, já tem embutido o scale, é só marcar como *scale = T*. Uma sugestão é rodar o PCA com *scale = F* para verem o que acontece ;-) A diferença de magnitude é realmente importante de se resolver nesse tipo de análise!  
+
+As variáveis que serão usadas no PCA são as morfométricas: corpo, perna, asa, peito, cabeça.    
+
+Antes, a variável ID foi transformada em nomes de linhas e depois foi removida.  
+```{r Row names}
+row.names(d) <- d$ID
+
+d <- d %>% 
+   select(-ID)
+
+```
+
+**Veja tudo que tem armazenado nos resultados!**
+```{r Run PCA}
+res.pca <- PCA(d, scale = T, quali.sup = c(1), graph = FALSE)
+res.pca
+
+```
+
+**O summary mostra várias informações importantes:**
+
+**Eigenvalues** são medidas de inércia, ou de variância explicada.  
+- O primeiro eixo é a combinação linear das variáveis que melhor dá conta da variância dos dados (72%), isso é, é o eixo de maior distância entre os pontos.    
+- O segundo eixo é o eixo ortogonal (perpendicular) ao primeiro, que dá melhor conta da variância que sobrou (10% da var total).      
+- Existem outros 3 eixos (o número de eixos = numéro de variáveis), mas os dados têm pouca variação nesses eixos, podemos descartá-los.  
+
+**Individuals**: mostra informação da posição dos indivíduos, essa nuvem formada pela PCA.  
+- Dist = a distância deles para o centro.  
+- Dim.1, Dim.2 =  coordenada deles em cada dimensão.  
+- ctr = influência deles na definição desses eixos (geralmente pontos nas extremidades têm maior
+ influência).    
+- cos2 = quão bem representados estão esses pontos nessa projecão criada pela PCA.  
+ 
+**Variaveis**
+- Dim.1, Dim2 = coeficiente da variável na equação linear do componente.   
+- ctr = contribuição daquela variável para a construção do componente.  
+- cos2 = correlação da variável com o componente.  
+ 
+**Categorias suplementares** : característica das nuvens de pontos em cada categoria.  
+- Dist: distância do centróide de cada nuvem ao centro do gráfico.  
+- Dim1, Dim2 = coordenadas do centro de cada nuvem.  
+- cos2 : o quanto as nuvens (definidas pelas categorias) estão associadas aos eixos.  
+- vtest: teste de diferença da média entre os dois grupos em cada dimensão.    
+
+```{r}
+summary(res.pca)
+
+```
+
+Visualização padrão:
+
+```{r}
+fviz_pca(res.pca)
+
+```
+
+De acordo com esse grafico, 29 e 40 são pássaros parecidos e com medidas altas em todas as variáveis.
+
+```{r}
+d1[c(29,40), 3:7]
+
+```
+
+Já 30 e 25 tem os valores mais baixos:
+
+```{r}
+d1[c(25,35), 3:7]
+
+```
+
+31 deve ter peito grande:
+
+```{r}
+d1[31, 3:7]
+
+```
+
+O 9 deve ter cabeça grande e o 18 e cabeça pequena:
+```{r}
+d1[c(9,18), 3:7]
+
+```
+
+**Visualização comum e mais bonita do factoextra. **  
+   
+Vamos ver como os *indivíduos* se distribuem nas duas primeiras componentes. Notém que o ponto 31 parece bem influente na dimensao 2!
+
+```{r}
+plot(res.pca, choix = "ind", axes = c(1,2))
+
+fviz_pca_ind(res.pca, habillage = 1)
+
+```
+
+Também poderíamos ver a terceira componente, notem a escala no eixo y (entre -2 e 2).   
+A nuvem é mais estreita nessa direção y do que na x.  
+
+```{r}
+plot(res.pca, choix = "ind", axes = c(1,3))
+
+fviz_pca_ind(res.pca, habillage = 1, axes = c(1,3))
+
+```
+
+Agora só as variaveis nas componentes 1 e 2:
+```{r}
+plot(res.pca, choix = "var", axes = c(1,2))
+
+fviz_pca_var(res.pca, col.var = "steelblue") +
+   theme_minimal()
+
+```
+
+E nas componentes 1 e 3. A PC 3 parece estar diferenciando os pássaros de corpo-asa grandes (mais largos) dos cabecudos-pernudos (altos).  
+
+```{r}
+plot(res.pca, choix = "var", axes = c(1,3))
+
+```
+
+Investigando os pássaros que moreram e sobreviveram, algum padrão? Parecem nuvens distintas? Ou está tudo misturado?  
+Pelas ellipses, podemos ver grande sobreposição entre os que sobreviveram e não sobreviveram. Não há diferença significante entre os grupos, mas há uma tendência daqueles que tem valores extremos das características morfológicas não sobrevirem. 
+```{r}
+fviz_pca_ind(res.pca, col.ind = "blue", habillage = 1,
+             addEllipses = T, repel = FALSE) +
+   theme_minimal()
+
+```
+
+**4. Circulo de correlacao**
+
+Os valores de contribuição são altos para todas as variáveis, veja facilmente com o gráfico a seguir, ou volte no summary do PCA:
+  
+```{r}
+fviz_pca_var(res.pca,  col.var = "contrib", gradient.cols = c("white", "blue", "red"), )+
+   theme_minimal()
+
+```
+
+Tentem visualizar os cossenos projetando um triângulo retângulo em relação a cada eixo. Lembrem que o cosseno está representando a correlação das variaveis com os PCs.
+```{r}
+fviz_pca_var(res.pca,  col.var = "cos2", gradient.cols = c("white", "blue", "red"))+
+   theme_minimal()
+
+```
+
+**5 - Gráfico de cotovelo**
+
+```{r}
+round(res.pca$eig, 2)
+
+#fviz_eig(res.pca, choice = "eigenvalue")
+fviz_eig(res.pca, choice = "eigenvalue", geom = "line") # variancia 
+#fviz_eig(res.pca, choice = "eigenvalue", geom = "line", linecolor = "red")
+
+fviz_eig(res.pca, choice = "variance") # aqui é % variancia total
+
+```
+
+Nós temos 72.32% + 10.63% = 82.95% da variabilidade explicada nas duas primeiras dimensões. Isso significa que projetar nossos dados nessas duas dimensões conserva 83% da variabilidade total do nosso conjunto de dados. Queremos que esse número seja o mais alto possível: isso significaria que encontramos uma boa redução de dimensionalidade de nossos dados, uma boa representação da nuvem de pontos num espaço bi-dimensional. 
+
+**Sugestão**: veja essa parte no exemplo decatlhon, pois lá, é possível observar mais diferenças, uma vez que há maior diluição entre as dimensões.
+
+**Outros gráficos interessantes:**
+
+```{r}
+plot.PCA(res.pca, choix = "ind", cex = 0.7)
+plot(res.pca, select = "cos2 0.8")
+plot(res.pca, select = "contrib 10")
+plot(res.pca, choix = "var", select = "contrib 8", unselect = 0)
+plot(res.pca, choix = "var", select = c("peito", "cabeca"))
+
+```
+
+**6. Um primo do condes, mas para ver dimensão a dimensão do PCA.**
+
+```{r}
+dimdesc(res.pca, 1:4)
+
+```
+
+**7. Como selecionar automaticamente o número de componentes para esses dados**
+
+Parece coerente! Um componente só é suficiente para resumir/reduzir as 5 variaveis morfológicas. Lembrando que cabe os pesquisador decidir quantas dimensões deve considerar nas análises.
+
+```{r}
+estim_ncp(d[, c(3:6)])
+
+```
+
+

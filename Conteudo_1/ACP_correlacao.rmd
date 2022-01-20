@@ -1,0 +1,99 @@
+---
+title: "Análise de Componetes Principais"
+author: "Raquel e Cláudia"
+date: "05/10/2021"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+### Disciplina de Estudo Dirigido: Análise Multivariada
+# ACP
+
+##### Bibliotecas
+```{r Bibliotecas, eval = TRUE, message = FALSE, warning = FALSE}
+library(FactoMineR)
+library(factoextra)
+library(corrplot)
+library(tidyverse)
+
+```
+
+## Dados
+Carregando os dados de exemplo do pacote e vendo como estão.    
+The data used here refer to athletes' performance during two sporting events.   
+A data frame with 41 rows and 13 columns:  
+* The first ten columns corresponds to the performance of the athletes for the 10 events of the decathlon.   
+* The columns 11 and 12 correspond respectively to the rank and the points obtained.   
+* The last column is a categorical variable corresponding to the sporting event (2004 Olympic Game or 2004 Decastar).    
+
+```{r Dados}
+data(decathlon)
+
+str(decathlon)
+summary(decathlon)
+head(decathlon)
+
+```
+
+## Função condes: continuous variable description 
+Veja o uso detalhado dessa função aqui nesse [link](http://factominer.free.fr/factomethods/continuous-variables-description.html).   
+
+num.var: the indice of the variable to characterize.    
+Usando o proba = 0.05, que é *default*. proba: the significance threshold considered to characterize the variable.    
+**$quanti**: The correlation coefficient between each continuous variable and the **chosen** variable is calculated. Then, the correlation coefficients significantly different from zero are sorted and returned. The description of the num.var variable by the quantitative variables. The variables are sorted in ascending order (from the one which characterized the most to the one which significantly characterized with the proba).    
+
+**$quali**: An anova model with one factor is done for each categorical variable; The chosen variable is explained by the categorical variable.  
+
+A F-test is derived to see whether the variable has an influence on 100m and T-tests are done category by category (with the contrast sum alpha_i = 0). The variables and the categories are sorted by p-value and only the significant ones are kept.  
+
+```{r função condes}
+# 100m
+names(decathlon)[1]
+condes(decathlon, num.var = 1)
+
+# Vendo direto quantas foram significativas
+cdesc <- condes(decathlon, num.var = 1)$quanti
+dim(cdesc)[1]
+
+# Testando rank
+# names(decathlon)[11]
+condes(decathlon, num.var = 11)
+
+# Vendo direto quantas foram significativas
+cdesc <- condes(decathlon, num.var = 11)$quanti
+dim(cdesc)[1]
+
+# Testando competition
+# names(decathlon)[13]
+condes(decathlon, num.var = 13)
+
+# Vendo direto quantas foram significativas
+cdesc <- condes(decathlon, num.var = 13)$quanti
+dim(cdesc)[1]
+
+# Testando points
+# names(decathlon)[12]
+condes(decathlon, num.var = 12)
+
+# Vendo direto quantas foram significativas
+cdesc <- condes(decathlon, num.var = 12)$quanti
+dim(cdesc)[1]
+
+```
+
+#### Como intepretar?  
+**Quanti**: Valores mais altos para variável 100m, tem valores mais altos para 110m.hurdle e 400m. O contrário acontece com Long.jump e Points.     
+**Quali**: Somente competition é significante para 100m.      
+Decaster tem coeficiente positivo para 100m, enquanto OlympicG, negativo. Parece que no evento Decaster as performances para 100m foram melhores? Seria isso? Aqui, cabe visitar e ver com calma o link com o exemplo *wine*, que pode ser acessado acima.      
+
+
+### Corrplot
+Visualizando a correlação de todas as variáveis de uma vez só. É algo bem interessante, mas se tivermos muitas variáveis, pode ficar difícil a visualização. Essa função é do pacote corrplot e tem várias configurações. Consulte a ajuda e exemplos na internet!     
+
+```{r corrplot}
+corrplot(cor(decathlon[,-c(11:13)]), type = "lower", order = "hclust", method = 'color', addCoef.col = "white", tl.cex = 0.8, tl.col = 1, number.cex = 0.7)
+
+```
+
+
