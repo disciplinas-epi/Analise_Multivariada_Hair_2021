@@ -32,7 +32,6 @@ Nesta subsessão abordamos os erros na coleta e entrada de dados que resultam em
 #### Pressupostos
 
 
-
 ### Conteúdo 1: Análise Fatorial   
 
 A análise fatorial é uma técnica de interdependência *"cujo propósito principal é definir a estrutura inerente entre as variáveis na análise"* (Hair et al., 2009). No capítulo 3 do livro de Hair et al. (2009), os autores dão ênfase a dois métodos de análise fatorial exploratória: a **análise de componentes principais (PCA)** e a **análise de fatores comuns**. Eles apresentam também um passo a passo com 7 estágios da análise fatorial. Nós preparamos uma [apresentação](AnaliseFatorial_apresentacao.pdf) e um [resumo](https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/Bruna_Denis/resumo_Analise_Fatorial.pdf) desse capítulo.
