@@ -18,7 +18,24 @@ Nesta sessão apresentamos o conteúdo teórico final do capítulo introdutório
 
 #### Os passos da análise multivariada
 
-1.  xxxxx
+Compreender o tratamento em seis etapas para a construção de modelo multivariado. O processo de seis etapas para a construção de modelo fornece uma estrutura para desenvolver, interpretar e validar qualquer análise multivariada.
+
+1. Definir o problema de pesquisa, os objetivos e a técnica multivariada a ser usada.
+Elaborar um modelo conceitual com as representações das relações a serem estudadas, não precisa ser complexo e detalhado.
+
+2. Desenvolver o plano de análise.
+Para cada técnica, o pesquisador deve desenvolver um plano de análise que aborde as questões particulares a seu propósito e projeto., como tamanho mínimo de amostra, tipos de variáveis e métodos de estimação.
+
+3. Avaliar as suposições.
+Todas as técnicas multivariadas têm suposições inerentes, tanto estatísticas quanto conceituais, que influenciam muito suas habilidades para representar relações multivariadas.
+4. Estimar o modelo multivariado e avaliar o ajuste.
+A análise inicia a real estimação do modelo multivariado e uma avaliação do ajuste geral do modelo. No processo de estimação, o pesquisador pode escolher entre opções para atender características específicas dos dados ou maximizar o ajuste dos dados.
+
+5. Interpretar as variáveis estatísticas.
+A interpretação de efeitos para variáveis individuais é feita examinando-se os coeficientes estimados (pesos) para cada variável na variável estatística.
+
+6. Validar o modelo multivariado.
+As tentativas de validar o modelo são direcionadas no sentido de demonstrar a generalidade dos resultados para a população total.
 
 #### Gráficos
 
