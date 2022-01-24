@@ -1,0 +1,186 @@
+---
+title: "Analise de agrupamentos não-hierarquicos"
+author: "Debora Silva e Lucas Bianchi"
+date: "10/28/2021"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# definindo semente aleatória e cores padrões
+set.seed(123)
+myColRamp <- colorRampPalette(colors = c("#3b44f5", "#00f020", "#ffc505"))
+```
+
+## Importando os dados
+
+Os dados utilizados são referentes às caracteristicas de flores.
+
+```{r}
+data(iris)
+View(iris)
+names(iris)
+str(iris)
+```
+
+# K-means
+
+A ideia básica por trás do agrupamento k-means consiste em definir clusters de forma que a variação total dentro do cluster (conhecida como variação total dentro do cluster) seja minimizada. 
+
+## Carregando os pacotes
+
+```{r}
+library(factoextra)
+```
+
+Como sabemos que são 3 diferentes especies, vamos definir no $k = 3$ (centers). O objetivo aqui é conseguir gerar grupos semelhantes aos da coluna "Species". Além disso, só utilizamos variáveis numéricas!
+
+```{r}
+k = 3
+km.res <- kmeans(iris[,-5], centers = k, iter.max = 10, nstart = 1)
+```
+
+Vamos olhar os resultados
+
+```{r}
+# Print the results
+print(km.res)
+```
+
+Podemos calcular as medias por cluster das variaveis que utilizamos para fazer os grupos, veja:
+
+```{r}
+aggregate(iris[,-5], by=list(cluster=km.res$cluster), mean)
+```
+
+```{r}
+iris_final <- cbind(iris, cluster = factor(km.res$cluster, levels = 1:k))
+```
+
+```{r}
+gg_kmeans <- ggplot(iris_final, aes(x = Petal.Length, y = Petal.Width, col = cluster, pch = Species)) + geom_point(size = 3) + 
+  scale_color_manual(values = myColRamp(3)) +
+  ggtitle("K-means")
+
+gg_kmeans
+
+table(iris_final$Species, iris_final$cluster)
+```
+
+
+# Random Forest
+
+O algoritmo random forest pode ser utilizado tanto para formação de clusters quanto para predição. Além disso, podemos utilizar a mesma função para executar a abordagem supervisionada quanto a não supervisionada.
+
+## Carregando os pacotes
+
+```{r}
+library(randomForest)
+library(caret)
+library(cluster)
+library(RColorBrewer)
+```
+
+## Abordagem supervisionada
+
+Primeiramente precisamos treinar o algortimo e como é uma abordagem supervisionada, vamos mostrar qual é a saída desejada atribuindo a variavel resposta a $y$ no modelo e as demais variaveis entram como "features", termo utilizado para expressar "variaveis explicativas" em machine learning.
+
+```{r}
+# Separando conjunto de treinamento e validacao
+valid <- sample(1:nrow(iris), 50) # Selecionando 50 amostras aleatorias
+```
+
+Separamos os dados em dois conjuntos. O primeiro conjunto é utilizado para ensinar o algortimo e o segundo para mensuarar se o modelo foi capaz de aprender corretamente. Agora vamos rodar o modelo!
+
+```{r}
+# random forest model
+rf <- randomForest(
+  x = iris[-valid,-5], # definindo as variaveis explicativas
+  y = iris$Species[-valid], # definindo as variavel resposta
+  mtry = 2, #numero de variaveis aleatoriamente selecionadas para separar os dados
+  ntree = 2000, #tamanho da arvore
+  proximity = TRUE #calculo de proximidade entre as linhas
+)
+```
+
+Obtemos o modelo! Vamos dar uma olhada em sua saída.
+
+```{r}
+rf
+```
+
+Agora vamos ver como o modelo se sai com os dados de validação.
+
+```{r}
+y_predicted <- predict(rf, iris[valid,-5])
+
+df1 <- data.frame(Orig=iris$Species[valid], Pred=y_predicted)
+
+confusionMatrix(table(df1$Orig, df1$Pred))
+```
+
+# Abordagem não supervisionada
+
+A abordagem não supervisionada é parecida, mas nesse caso, não vamos dizer ao modelo quem é a nossa variavel resposta, o algoritmo precisa identificar as caracteristicas que separam as flores sozinho. 
+
+```{r}
+# random forest model
+rf2 <- randomForest(
+  x = iris[,-5], # definindo as variaveis explicativas
+  mtry = 2, #numero de variaveis aleatoriamente selecionadas para separar os dados
+  ntree = 2000, #tamanho da arvore
+  proximity = TRUE #calculo de proximidade entre as linhas
+)
+```
+
+Obtemos o modelo! Vamos dar uma olhada em sua saída. Veja que em "Type of random forest" agora temos o termo "unsupervised".
+
+```{r}
+rf2
+```
+
+Agora vamos ver como o modelo se sai com os dados de validação.
+
+```{r}
+prox <- rf2$proximity
+pam.rf <- pam(prox, 3) # Particionar usando os medoids (versao mais robusta od k-means)
+pred <- cbind(pam.rf$clustering, iris$Species)
+table(pred[,2], pred[,1])
+```
+
+Gerando o gráfico, temos:
+
+```{r}
+Clusters <- factor(pam.rf$cluster, levels = c(2,1,3))
+
+Species <- iris$Species
+
+gg_rf_unsupervised <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width, col = Clusters, pch = Species)) + geom_point(size = 3) + 
+  scale_color_manual(values = myColRamp(3)) +
+  ggtitle("Random Forest (unsupervised)")
+
+gg_rf_unsupervised
+```
+
+# Resultado final
+
+```{r}
+require(ggpubr)
+ggarrange(gg_kmeans, gg_rf_unsupervised)
+```
+
+# Exercicio
+
+## Importando os dados
+
+Os dados são referentes à mulheres submetidas à um exame de mama, onde uma amostra da massa mamária foi coletada. As informações são referentes as características dos núcleos celulares presentes nas amostras.
+
+[Baixar dados](https://www.kaggle.com/uciml/breast-cancer-wisconsin-data?select=data.csv)
+
+```{r}
+dados <- read.csv(file = "data.csv")
+```
+

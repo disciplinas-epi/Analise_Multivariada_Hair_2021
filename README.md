@@ -39,6 +39,8 @@ As tentativas de validar o modelo são direcionadas no sentido de demonstrar a g
 
 #### Gráficos
 
+Nesta seção temos uma abordagem rápida dos principais tipos de váriaveis e como isso influência na escolha dos gráficos. Em seguida, são apresentados visões univariadas e bivariadas e por fim, alguns gráficos comumente utilizados na análise multivariada de dados.
+
 #### Dados perdidos
 
 Nesta subsessão abordamos os erros na coleta e entrada de dados que resultam em dados perdidos, os tipos de dados perdidos e por que geram problemas para a análise. Por meio de uma série de passos, identificamos seus impactos e possíveis soluções para lidar com esse inconveniente.

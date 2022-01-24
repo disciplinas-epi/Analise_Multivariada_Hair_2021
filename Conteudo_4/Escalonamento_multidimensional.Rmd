@@ -1,0 +1,149 @@
+---
+title: "Escalonamento multidimensional"
+author: "Debora Silva, Elizabeth Barbosa e Lucas Bianchi"
+date: "11/19/2021"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Escalonamento Multidimensional
+
+O escalonamento multidimensional (MDS) é uma abordagem de análise de dados multivariada usada para visualizar a similaridade/dissimilaridade entre amostras, plotando pontos em gráficos bidimensionais.
+
+O MDS retorna uma solução ótima para representar os dados em um espaço de dimensão inferior, onde o número de dimensões $k$ é pré-especificado pelo analista. Por exemplo, escolher $k = 2$ otimiza as localizações dos objetos para um gráfico de dispersão bidimensional.
+
+Um algoritmo MDS toma como dados de entrada a matriz de dissimilaridade, representando as distâncias entre pares de objetos.
+
+## Tipos de algoritmos MDS
+Existem diferentes tipos de algoritmos MDS, incluindo
+
+* *Escala multidimensional clássica:* Preserva a métrica de distância original, entre os pontos, da melhor maneira possível. Essas são as distâncias ajustadas no mapa MDS e as distâncias originais estão na mesma métrica. O MDS clássico pertence à chamada categoria de escalonamento multidimensional métrico.
+
+*  *Escala multidimensional não métrica:* Também é conhecido como MDS ordinal. Aqui, não é a métrica de um valor de distância que é importante ou significativo, mas seu valor em relação às distâncias entre outros pares de objetos.
+
+MDS ordinal constrói distâncias ajustadas que estão na mesma ordem de classificação que a distância original. Por exemplo, se a distância dos objetos separados 1 e 5 estiver em quinto lugar nos dados de distância originais, eles também devem ficar em quinto lugar na configuração do MDS. Esse tipo de MDS é adequado para dados qualitativos.
+
+# Mãos a obra!
+
+## Importando os dados
+
+```{r}
+data("swiss") #dados que contêm dados socioeconômicos e de fertilidade em 47 províncias de língua francesa na Suíça.
+head(swiss)
+```
+
+## MDS clássico
+
+Para o MDS classico utilizamos a funcao *cmdscale()*. Por padrão, usa-se a distância euclidiana, mas pode-se utilizar outra métrica. O importante é construir uma matriz de distâncias.
+
+```{r}
+# Load required packages
+library(magrittr)
+library(dplyr)
+library(ggpubr)
+
+# Cmpute MDS
+mds <- swiss %>%
+  dist() %>%        # cria uma matriz de distancias
+  cmdscale(k = 2) %>%    # calcula o MDS classico
+  as_tibble()
+colnames(mds) <- c("Dim.1", "Dim.2")
+
+# Plot MDS
+ggscatter(mds, x = "Dim.1", y = "Dim.2", 
+          label = rownames(swiss),
+          size = 1,
+          repel = TRUE)
+```
+
+Agora incorporando a análise que vimos em uma das aulas passada, o k-means.
+
+```{r}
+# K-means clustering
+clust <- kmeans(mds, 3)$cluster %>%
+  as.factor()
+
+swiss_final <- swiss_final %>%
+  mutate(clust2 = clust)
+
+# Plot and color by groups
+ggscatter(mds, x = "Dim.1", y = "Dim.2", 
+          label = rownames(swiss),
+          color = "groups",
+          size = 1, 
+          ellipse = TRUE,
+          ellipse.type = "convex",
+          repel = TRUE)
+```
+
+## MDS ordinal
+
+Para o MDS classico utilizamos a funcao *isoMDS()*. ou seja, o desajuste do Kruskal. Nesse caso, o que interessa não é a distância, mas o ranking das distâncias entre os objetos.
+
+```{r}
+library(magrittr)
+library(dplyr)
+library(ggpubr)
+```
+
+```{r}
+# Cmpute MDS
+library(MASS)
+mds <- swiss %>%
+  dist() %>%          # cria uma matriz de distancias
+  isoMDS(k = 2) %>%        # cria uma matriz de ordinal
+  .$points %>%
+  as_tibble()
+colnames(mds) <- c("Dim.1", "Dim.2")
+
+# Plot MDS
+ggscatter(mds, x = "Dim.1", y = "Dim.2", 
+          label = rownames(swiss),
+          size = 1,
+          repel = TRUE)
+```
+
+```{r}
+# K-means clustering
+clust <- kmeans(mds, 3)$cluster %>%
+  as.factor()
+
+mds <- mds %>%
+  mutate(groups = clust)
+# Plot and color by groups
+ggscatter(mds, x = "Dim.1", y = "Dim.2", 
+          label = rownames(swiss),
+          size = 1,
+          color = "groups",
+          ellipse = TRUE,
+          ellipse.type = "convex",
+          repel = TRUE)
+```
+
+## Comparando MDS e PCA
+Matematicamente e conceitualmente, existem correspondências próximas entre o MDS e outros métodos usados para reduzir a dimensionalidade de dados complexos, como a análise de componentes principais (PCA) e a análise fatorial.
+
+O PCA está mais focado nas próprias dimensões e busca maximizar a variância explicada, enquanto o MDS está mais focado nas relações entre os objetos escalados.
+
+O MDS projeta pontos de dados n-dimensionais para um espaço (comumente) bidimensional, de modo que objetos semelhantes no espaço n-dimensional estejam próximos no gráfico bidimensional, enquanto o PCA projeta um espaço multidimensional para as direções de variabilidade máxima usando covariância / matriz de correlação para analisar a correlação entre pontos de dados e variáveis.
+
+# Fazendo o k-means com as variaveis
+
+O k-means feito anteriormente utilizava as distancias obtidas via MDS, enquanto esta analise considera os grupos formados pelas variáveis. Enquanto o MDS busca resumir e mostrar os objetos em um mapa bidimensional, o cluster obtido via k-means tem como objetivo agrupar as variaveis, consequentemente há maior interpretabilidade.
+
+```{r}
+myColRamp <- colorRampPalette(colors = c("#3b44f5", "#00f020", "#ffc505"))
+k = 3
+km.res <- kmeans(swiss, centers = k, iter.max = 10, nstart = 1)
+swiss_final <- cbind(swiss, cluster = factor(km.res$cluster, levels = 1:k))
+View(swiss_final)
+
+ggplot(swiss_final, aes(x = Education, y = Infant.Mortality, col = cluster)) + geom_point(size = 3) + 
+  scale_color_manual(values = myColRamp(3)) +
+  ggtitle("K-means")
+```
