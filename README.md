@@ -63,9 +63,7 @@ A **análise de agrupamentos** é uma técnica de interdependência que pode ser
 
 A **análise discriminante múltipla** é uma técnica multivariada aplicável quando a variável dependente é dicotômica ou multicotômica. Seu principal objetivo é entender as diferenças entre os grupos analisados e observar se um objeto do estudo pertence realmente ao grupo prévio selecionado, baseando-se em diversas variáveis independentes métricas (Hair *et al.*, 2009). No capítulo 5 intitulado "Análise Discriminante Múltipla e Regressão Logística" do livro de Hair *et al.* (2009), os autores descrevem esse método e sua relação com a regressão logística. 
 
-Você pode iniciar seus estudos sobre essa técnica acessando o pdf do conteúdo [Análise discriminante.pdf](https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/Conteudo_3/AN%C3%81LISE%20DE%20DISCRIMINANTE.pdf) e para  aplica-la aos seus dados no software R, acesse o script [Análise_discriminante.Rmd](https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/Conteudo_3/An%C3%A1lise_discriminante.Rmd).
-
-Você pode iniciar seus estudos sobre essa técnica acessando o [pdf do conteúdo](https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/Conteudo_3/AN%C3%81LISE%20DE%20DISCRIMINANTE.pdf) e para  aplicar a técnica aos seus dados no software R, acesse o [script](https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/Conteudo_3/An%C3%A1lise_discriminante.Rmd).
+Você pode iniciar seus estudos sobre a técnica acessando o [pdf do conteúdo](https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/Conteudo_3/AN%C3%81LISE%20DE%20DISCRIMINANTE.pdf) e para aplicá-la aos seus dados no software R, acesse o [script](https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/Conteudo_3/An%C3%A1lise_discriminante.Rmd).
 
 ### Conteúdo 4: Escalonamento multidimensional
 
