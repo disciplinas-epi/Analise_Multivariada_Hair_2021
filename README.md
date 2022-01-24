@@ -65,7 +65,7 @@ A **análise discriminante múltipla** é uma técnica multivariada aplicável q
 
 Você pode iniciar seus estudos sobre essa técnica acessando o pdf do conteúdo [Análise discriminante.pdf](https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/Conteudo_3/AN%C3%81LISE%20DE%20DISCRIMINANTE.pdf) e para  aplica-la aos seus dados no software R, acesse o script [Análise_discriminante.Rmd](https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/Conteudo_3/An%C3%A1lise_discriminante.Rmd).
 
-Você pode iniciar seus estudos sobre essa técnica acessando o [pdf do conteúdo](https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/Conteudo_3/AN%C3%81LISE%20DE%20DISCRIMINANTE.pdf) e para  aplicar a técnica aos seus dados no software R, acesse o [script] (https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/Conteudo_3/An%C3%A1lise_discriminante.Rmd).
+Você pode iniciar seus estudos sobre essa técnica acessando o [pdf do conteúdo](https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/Conteudo_3/AN%C3%81LISE%20DE%20DISCRIMINANTE.pdf) e para  aplicar a técnica aos seus dados no software R, acesse o [script](https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/Conteudo_3/An%C3%A1lise_discriminante.Rmd).
 
 ### Conteúdo 4: Escalonamento multidimensional
 
