@@ -57,13 +57,15 @@ Como a **PCA** é uma técnica muito utilizada, inclusive como base para outras 
 
 ### Conteúdo 2: Análise de agrupamentos
 
-A **análise de agrupamentos** é uma técnica de interdependência que pode ser utilizada quando o objetivo é formar grupos de objetos (pessoas, produtos, entre outros) com características semelhantes entre si. No capítulo 8 do livro de Hair *et al.* (2009), os autores apresentam informações mais detalhadas sobre esta técnica. Após a leitura deste  capítulo, você pode acessar a [apresentação de slides](Conteudo_2/analise_agrupamento_parte1.pdf) e a [vídeo-aula](https://youtu.be/tFoW5vs4mOM) ministrada pelas discentes @elizabethleite e @isiyara. Para praticar no R os métodos de agrupamento hierárquicos, acesse o [script](Conteudo_2/analise_agrupamento_hierarquico.R) e baixe o banco de dados [factbook](Conteudo_2/factbook.txt).
+A **análise de agrupamentos** é uma técnica de interdependência que pode ser utilizada quando o objetivo é formar grupos de objetos (pessoas, produtos, entre outros) com características semelhantes entre si. No capítulo 8 do livro de Hair *et al.* (2009), os autores apresentam informações mais detalhadas sobre esta técnica. Após a leitura deste  capítulo, você pode acessar a [apresentação de slides](Conteudo_2/analise_agrupamento_parte1.pdf) e a [vídeo-aula](https://youtu.be/tFoW5vs4mOM) ministrada pelas discentes \@elizabethleite e \@isiyara. Para praticar no R os métodos de agrupamento hierárquicos, acesse o [script](Conteudo_2/analise_agrupamento_hierarquico.R) e baixe o banco de dados [factbook](Conteudo_2/factbook.txt).
 
 ### Conteúdo 3: Análise Discriminante Múltipla
 
 A **análise discriminante múltipla** é uma técnica multivariada aplicável quando a variável dependente é dicotômica ou multicotômica. Seu principal objetivo é entender as diferenças entre os grupos analisados e observar se um objeto do estudo pertence realmente ao grupo prévio selecionado, baseando-se em diversas variáveis independentes métricas (Hair *et al.*, 2009). No capítulo 5 intitulado "Análise Discriminante Múltipla e Regressão Logística" do livro de Hair *et al.* (2009), os autores descrevem esse método e sua relação com a regressão logística. Você pode iniciar seus estudos sobre a técnica acessando o [pdf do conteúdo](https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/Conteudo_3/AN%C3%81LISE%20DE%20DISCRIMINANTE.pdf) e para aplicá-la aos seus dados no software R, acesse o [script](https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/Conteudo_3/An%C3%A1lise_discriminante.Rmd).
 
 ### Conteúdo 4: Escalonamento multidimensional
+
+O **escalonamento multidimensional** é uma técnica de interdependência que identifica dimensões-chave que representam as percepções de um indivíduo quanto a atributos de produtos, serviços, etc. O posicionamento desses atributos em um espaço multidimensional (mapeamento perceptual) permite identificar as relações entre eles com base em medidas de similaridade ou preferência. Você pode iniciar os seus estudos realizando a leitura do capítulo 9 do livro de Hair *et al.* (2009). Posteriormente, acesse os [slides]() e a [vídeo-aula](). Para aplicar a técnica no R, acesse o [script]().
 
 ### Conteúdo 5: Análise de correspondência
 
