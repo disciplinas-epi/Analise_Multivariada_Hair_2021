@@ -57,7 +57,7 @@ Como a **PCA** é uma técnica muito utilizada, inclusive como base para outras 
 
 ### Conteúdo 2: Análise de agrupamentos
 
-A **análise de agrupamentos** é uma técnica de interdependência que pode ser utilizada quando o objetivo é formar grupos de objetos (pessoas, produtos, entre outros) com características semelhantes entre si. No capítulo 8 do livro de Hair *et al.* (2009), os autores apresentam informações mais detalhadas sobre esta técnica. Aós a leitura deste  capítulo, você pode acessar os slides "analise_agrupamento_1" e a [vídeo-aula](https://youtu.be/tFoW5vs4mOM). Para praticar no R os métodos de agrupamento hierárquicos, acesse o script [analise_agrupamento_hierarquico](Conteudo_3/analise_agrupamento_hierarquico.R) e baixe o banco de dados "factbook".
+A **análise de agrupamentos** é uma técnica de interdependência que pode ser utilizada quando o objetivo é formar grupos de objetos (pessoas, produtos, entre outros) com características semelhantes entre si. No capítulo 8 do livro de Hair *et al.* (2009), os autores apresentam informações mais detalhadas sobre esta técnica. Aós a leitura deste  capítulo, você pode acessar os slides "analise_agrupamento_1" e a [vídeo-aula](https://youtu.be/tFoW5vs4mOM). Para praticar no R os métodos de agrupamento hierárquicos, acesse o script [analise_agrupamento_hierarquico](Conteudo_3/analise_agrupamento_hierarquico.R) e baixe o banco de dados [factbook](Conteudo_3/factbook.txt).
 
 ### Conteúdo 3: Análise Discriminante Múltipla
 
