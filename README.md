@@ -12,7 +12,7 @@ Bem vindos ao conteúdo da disciplina de estudo dirigido de **Analise Multivaria
 
 Nesta página apresentamos e indicamos onde encontrar o material organizado durante a disciplina. Esperamos que seja um conteúdo útil para quem deseja se aventurar no mundo da análise multivariada. Nem todas as análises foram abordadas ao longo da disciplina, afinal, são muitos os tipos de análises. Demos preferência as técnicas de interdependência, uma vez que técnicas que envolvem dependência, já são abordadas em outras disciplinas. Apenas Análise Discriminante Múltipla foi tratada dentre as técnicas de dependência.
 
-### Conteúdo 1: Introdução e Exame de seus dados
+### Conteúdo 0: Introdução e Exame de seus dados
 
 Nesta sessão apresentamos o conteúdo teórico final do capítulo introdutório, em que é descrito, de forma genérica, o passo-a-passo de uma análise multivariada. Também abordamos o conteúdo do capítulo 2, intitulado "Exame de seus Dados". Você pode iniciar seus estudos acessando os slides "0 Introdução + Exame de seus dados" (<https://github.com/disciplinas-epi/Analise_Multivariada_Hair_2021/blob/main/0%20Introdu%C3%A7%C3%A3o%20%2B%20Exame%20de%20seus%20dados.pdf>) e a [vídeo-aula](???).
 
@@ -41,9 +41,11 @@ As tentativas de validar o modelo são direcionadas no sentido de demonstrar a g
 
 #### Dados perdidos
 
-Nesta subsessão abordamos os erros na coleta e entrada de dados que resultam em dados perdidos, os tipos de dados perdidos e por que geram problemas para a análise. Por meio de uma série de passos, identificamos seus impactos e possíveis soluções para lidar com esse inconveniente.
+Nesta subseção abordamos os erros na coleta e entrada de dados que resultam em dados perdidos, os tipos de dados perdidos e por que geram problemas para a análise. Por meio de uma série de passos, identificamos seus impactos e possíveis soluções para lidar com esse inconveniente.
 
 #### Outliers
+
+Nesta subseção conceituamos "outliers" e apresentamos formas de detecção univariada, bivariada e multivariada. 
 
 #### Pressupostos
 
@@ -55,7 +57,7 @@ Como a **PCA** é uma técnica muito utilizada, inclusive como base para outras 
 
 ### Conteúdo 2: Análise de agrupamentos
 
-Nesta sessão apresentamos o conteúdo teórico do capítulo 8 intitulado "Análise de agrupamentos". Você pode iniciar seus estudos acessando os slides "analise_agrupamento_1" e a [vídeo-aula](https://youtu.be/tFoW5vs4mOM). Para praticar no R os métodos de agrupamento hierárquicos, acesse o script [analise_agrupamento_hierarquico](Conteudo_3/analise_agrupamento_hierarquico.R) e baixe o banco de dados "factbook".
+A **análise de agrupamentos** é uma técnica de interdependência que pode ser utilizada quando o objetivo é formar grupos de objetos (pessoas, produtos, entre outros) com características semelhantes entre si. No capítulo 8 do livro de Hair *et al.* (2009), os autores apresentam informações mais detalhadas sobre esta técnica. Aós a leitura deste  capítulo, você pode acessar os slides "analise_agrupamento_1" e a [vídeo-aula](https://youtu.be/tFoW5vs4mOM). Para praticar no R os métodos de agrupamento hierárquicos, acesse o script [analise_agrupamento_hierarquico](Conteudo_3/analise_agrupamento_hierarquico.R) e baixe o banco de dados "factbook".
 
 ### Conteúdo 3: Análise Discriminante Múltipla
 
