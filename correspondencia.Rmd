@@ -1,0 +1,358 @@
+---
+title: "Análise de Correspondência"
+author: "**Laís Botelho e Mariana Neves**"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+<style>
+body {
+text-align: justify}
+</style>
+
+```{r setup, include=FALSE} 
+# Monstrando apenas código e resultados
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE)
+
+```
+
+####  **Definição:** 
+Técnica exploratória para mapeamento perceptual baseada em categorias
+de uma tabela de contingência (HAIR,2009).
+
+**Análise de Correspondência no R**:
+
+* No pacote FactoMineR:CA() 
+
+* No pacote ca:ca()
+
+* No pacote ade4:dudi.coa() 
+
+* No pacote MASS:corresp() 
+
+* No pacote ExPosition:epCA()
+
+**Pacotes utilizados:** 
+
+Utilizou-se o pacote **FactoMineR** para realizar as análises e o pacote **factoextra** para visualização em ggplot2.
+
+```{r} 
+#install.packages("factoextra")
+#install.packages("FactoMineR")
+#install.packages("gplots")
+```
+
+
+```{r} 
+library(factoextra)
+library(FactoMineR)
+library(gplots)
+
+```
+**Banco utilizado**
+
+```{r} 
+data(housetasks)
+str(housetasks)
+```
+
+####  **Tabela de contingência**
+```{r} 
+View(housetasks)
+```
+
+```{r} 
+#Convertendo os dados do pacote em uma tabela 
+dt <- as.table(as.matrix(housetasks))
+
+```
+
+**Gráfico balloonplot**
+
+Neste gráfico, a célula contém um ponto cujo tamanho reflete a magnitude relativa do componente correspondente.
+
+```{r} 
+balloonplot(t(dt), main ="housetasks", xlab ="", ylab="",
+            label = FALSE, show.margins = FALSE)
+
+```
+
+
+####  **1. Cálculo da análise de correspondência**
+```{r} 
+res.ca <- CA(housetasks, graph = FALSE)
+res.ca 
+
+```
+
+####  **2. Significância estatística: Teste qui-quadrado**
+
+É utilizado para avaliar se há uma dependência significativa entre as linhas e colunas.
+
+Neste exemplo, o qui-quadrado de independência entre as duas variáveis foi igual a 1944,456 (p-valor = 0), tendo, portanto, associação significativa.
+
+```{r }
+summary(res.ca)
+```
+
+
+####  **3.Dimensões**
+Segundo HAIR (2009), o número de dimensões a serem mantidas na solução se baseia em:
+
+* Dimensões com inércia (autovalores) maiores que 0,2.
+* Dimensões suficientes para atender os objetivos da pesquisa (geralmente duas ou três).
+
+```{r }
+eig.val <- get_eigenvalue(res.ca)
+eig.val
+```
+
+
+A dimensão 1 explica a maior variação, seguida pela dimensão 2 e assim por diante.
+A primeira dimensão representa 48.7% da variação.
+Cerca de 88,6% da variação é explicada pelas duas primeiras dimensões. 
+
+O número de dimensões pode ser visualizado através do Scree Plot.
+Este gráfico ordena as dimensões da maior para o menor. 
+O ponto em que gráfico mostra uma curva (o chamado "cotovelo") pode ser considerado como indicando uma dimensionalidade ideal.
+
+```{r }
+g1<- fviz_screeplot(res.ca, addlabels = TRUE, ylim = c(0, 50), 
+               main = "Gráfico Eigenvalues",
+               barfill = "Gray", barcolor = "Gray",linecolor = "Black",
+               xlab = "Dimensões",
+               ylab= "Percentual de variância explicada",
+               ggtheme = theme_classic())
+g1
+
+```
+
+
+Screeplot com valor médio de eigen em linha tracejada:
+
+```{r }
+g2<- g1+
+ geom_hline(yintercept=33.33, linetype=2, color="red")
+g2
+
+```
+
+**Interpretação:**
+
+O gráfico demonstra que é possível utilizar apenas as dimensões 1 e 2 , pois a dimensão 3 explica apenas 11,4% da inércia total, abaixo do autovalor médio (33,33%). As dimensões 1 e 2 contribuem significativamente para a interpretação da natureza da associação entre as linhas e colunas, porque correspondem a cerca de 88,6% da variação.
+
+####  **4.Avaliação da associação de colunas e linhas**
+"CA cria um mapa perceptual usando a medida padronizada para estimar dimensões ortogonais
+sobre as quais as categorias podem ser colocadas para explicar melhor a intensidade de associação representada pelas distâncias qui-quadrado" (HAIR,2009).
+
+
+**Biplot**
+
+* Biplot é uma exibição gráfica de linhas e colunas segundo dimensões. 
+
+* A proximidade indica o nível de associação entre as categorias linha ou coluna (HAIR,2009).
+
+* As linhas são representadas por pontos azuis e colunas por triângulos vermelhos.
+
+**Biplot de variáveis de linha e coluna:**
+```{r }
+fviz_ca_biplot(res.ca, repel = TRUE)
+```
+
+**Interpretação:**
+
+Este gráfico mostra que as tarefas domésticas como preparo do jantar, café da manhã e lavanderia são feitas com mais frequência pela esposa. Condução e reparos são feitos pelo marido.
+
+**Obs:** Este é um tipo de gráfico **Biplot simétrico**. Ele representa os perfis de linha e coluna simultaneamente em um espaço comum.
+Neste caso, apenas a distância entre os pontos de linha **OU** a distância entre os pontos da coluna podem ser realmente interpretadas.
+
+##### **4.1 Linhas**
+
+Extraindo os resultados apenas para as linhas:
+
+```{r }
+row <- get_ca_row(res.ca)
+row
+```
+**Coordenadas de cada ponto de linha em cada dimensão (1, 2 e 3):**
+
+```{r }
+head(row$coord)
+```
+
+**Coordenadas de pontos de linha:**
+
+* Linhas com perfil semelhante são agrupadas.
+* Linhas negativamente correlacionadas são posicionadas em lados opostos do quadrante.
+
+```{r }
+fviz_ca_row(res.ca, repel = TRUE)
+```
+
+
+**Qualidade de representação das linhas:**
+
+A soma do cos2 para linhas em todas as dimensões é igual a 1.
+Para alguns dos itens da linha, mais de 2 dimensões são necessárias para representar perfeitamente os dados.
+
+```{r }
+head(row$cos2)
+```
+**Gráfico de variáveis de linha:**
+
+```{r }
+fviz_ca_row(res.ca, col.row = "cos2",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
+             repel = TRUE)
+```
+
+**Contribuição de linhas (em %) para a definição das dimensões:**
+
+* As variáveis de linha com maior valor, contribuem mais para a definição das dimensões.
+
+* As linhas que mais contribuem para Dim.1 e Dim.2 são as mais importantes para explicar a variabilidade no conjunto de dados.
+
+```{r }
+head(row$contrib)
+```
+**Contribuições de linhas para a dimensão 1:**
+
+```{r }
+fviz_contrib (res.ca, escolha = "linha", eixos = 1, topo = 10)
+```
+
+**Contribuições de linhas para a dimensão 2:**
+
+```{r }
+fviz_contrib (res.ca, choice = "row", axes = 2, top = 10)
+```
+
+**Contribuição total para a dimensão 1 e 2:**
+
+```{r }
+fviz_contrib (res.ca, escolha = "linha", eixos = 1: 2, topo = 10)
+```
+
+Obs: A linha vermelha tracejada no gráfico acima indica o valor médio esperado, se as contribuições forem uniformes.
+
+**Interpretação:**
+
+Os itens da linha Reparos, Lavanderia, Refeição Principal e Condução são os mais importantes na definição da primeira dimensão.
+Os itens da linha Feriados e reparos são os que mais contribuem para a dimensão 2.
+
+**Os pontos de linha mais importantes (em relação à contribuições) podem ser destacados no gráfico de dispersão da seguinte forma:**
+
+```{r }
+fviz_ca_row(res.ca, col.row = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
+             repel = TRUE)
+```
+
+**Interpretação:**
+
+As categorias de linha Reparo e Condução têm uma contribuição importante para o polo positivo da primeira dimensão, enquanto as categorias Lavanderia e Refeição principal têm grande contribuição para o polo negativo da primeira dimensão.
+
+Isso significa que a dimensão 1 é definida principalmente pela oposição de Reparo e Condução (polo positivo), e Lavanderia e Refeição principal (polo negativo).
+
+
+##### **4.2 Colunas**
+
+```{r }
+col <- get_ca_col(res.ca)
+col
+```
+
+
+```{r }
+fviz_ca_col(res.ca)
+```
+
+
+```{r }
+fviz_ca_col(res.ca, col.col = "cos2", 
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE)
+```
+
+**cos2 por coluna**
+
+O cos2 mede o grau de associação entre linhas/colunas e um eixo específico. Seu valor máximo é 1.
+
+**Interpretação**
+
+Apenas o item da coluna Alternando não é muito bem exibido nas duas primeiras dimensões. A posição deste item deve ser interpretada com cautela no espaço formado pelas dimensões 1 e 2.
+
+```{r }
+fviz_cos2(res.ca, choice = "col", axes = 1:2)
+```
+
+Para visualizar a contribuição das linhas para as duas primeiras dimensões:
+
+```{r }
+fviz_contrib(res.ca, choice = "col", axes = 1:2)
+```
+####  **Biplot**
+
+**Biplot contribuição**
+
+* Proposto por Michael Greenacre em 2013.
+* Neste tipo de Biplot, os pontos que contribuem muito pouco para a solução, estão próximos ao centro do biplot e são relativamente sem importância para a interpretação.
+* Quanto mais perto uma seta está (em termos de distância angular) para um eixo maior é a contribuição da categoria de linha nesse eixo em relação ao outro eixo. Se a seta estiver no meio do caminho entre os dois, sua categoria de linha contribui para os dois eixos na mesma medida.
+* A posição dos pontos do perfil da coluna é inalterada em relação à do biplot convencional. No entanto, as distâncias dos pontos de linha da origem da parcela estão relacionadas às suas contribuições para o mapa fator bidimensional.
+
+```{r }
+fviz_ca_biplot(res.ca, map ="colgreen", arrow = c(TRUE, FALSE),
+               repel = TRUE)
+```
+
+**Interpretação:**
+
+Interpretando a contribuição das linhas para os eixos. 
+
+Os reparos da categoria linha têm uma contribuição importante para o polo positivo da primeira dimensão, enquanto as categorias Lavanderia e Refeição principal têm grande contribuição para o polo negativo da primeira dimensão.
+
+A dimensão 2 é definida principalmente pela categoria de linha Feriados.
+
+A categoria de linha Driving contribui para os dois eixos na mesma medida.
+
+
+**Descrição da dimensão**
+```{r }
+res.desc <- dimdesc(res.ca, axes = c(1,2))
+```
+
+Descrição da dimensão 1 por pontos da linha:
+```{r }
+head(res.desc[[1]]$row, 4)
+```
+
+Descrição da dimensão 1 por pontos de coluna:
+```{r }
+head(res.desc[[1]]$col, 4)
+```
+
+Descrição da dimensão 2 por pontos de linha:
+```{r }
+res.desc[[2]]$row
+```
+
+Descrição da dimensão 1 por pontos de coluna:
+```{r }
+res.desc[[2]]$col
+```
+
+
+Para identificar facilmente pontos de linha e coluna que são os mais associados às principais dimensões.
+As variáveis linha/coluna são classificadas por suas coordenadas na saída.
+
+
+#### **6. Outliers**
+Não há aparentes outliers em nossos dados.
+Se houver outliers nos dados, eles devem ser suprimidos ou tratados como pontos complementares ao re-executar a análise de correspondência.
+
+
+#### **7. Referência**
+HAIR, J. F, _et al_, Análise multivariada de dados – 6. ed. Porto Alegre : Bookman, 2009.
+
+[Articles - Principal Component Methods in R: Practical Guide](http://sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/114-mca-multiple-corresponden)
