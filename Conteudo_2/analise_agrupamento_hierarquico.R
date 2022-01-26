@@ -96,7 +96,7 @@
 
 # Escolhendo diretório
 
-setwd("C:/Users/isiya/OneDrive/Doutorado/Disciplinas/8_Anallise_multivariada/2_Analise_de_agrupamento")
+setwd()
 
 dir()
 
